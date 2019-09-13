@@ -1,8 +1,6 @@
 package appjc.joercamu.aplicacionturismonativo.Sitios;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 import appjc.joercamu.aplicacionturismonativo.R;
