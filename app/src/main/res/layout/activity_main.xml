@@ -1,6 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,17 +9,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/list_view_sitios"
-        android:layout_alignBottom="@+id/list_view_sitios"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
         android:onClick="goToSiteNewActivity"
-        android:text="nuevo sitio" />
-
-    <ListView
-        android:id="@+id/list_view_sitios"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:text="Sitios" />
 
 </RelativeLayout>
