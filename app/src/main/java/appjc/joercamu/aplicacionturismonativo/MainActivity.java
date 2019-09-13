@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mlistView = findViewById(R.id.list_view_sitios);
-        textOut = findViewById(R.id.textOut);
+        // textOut = findViewById(R.id.textOut);
         // mlistView.setAdapter(mArrayAdapter);
         getSitios();
     }
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Esena> call, Response<Esena> response) {
                 if(!response.isSuccessful()){
-                    textOut.setText("status" + response.code());
+                    //textOut.setText("status" + response.code());
                     return;
                 }
                 List<Sitio> sitiosList = response.body().getInfo();

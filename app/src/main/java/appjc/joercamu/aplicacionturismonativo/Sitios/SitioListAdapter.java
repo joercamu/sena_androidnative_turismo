@@ -1,13 +1,20 @@
 package appjc.joercamu.aplicacionturismonativo.Sitios;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import appjc.joercamu.aplicacionturismonativo.R;
@@ -43,8 +50,11 @@ public class SitioListAdapter extends ArrayAdapter<Sitio> {
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView titleSitio = convertView.findViewById(R.id.titleSitio);
+        ImageView imageSitio = convertView.findViewById(R.id.imageSitio);
 
+        Picasso.get().load(sitePhoto).into(imageSitio);
         titleSitio.setText(siteName);
+
         return convertView;
     }
 }
