@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SiteNewActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear nuevo sitio" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre del sitio"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Informacion"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/editTextPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="foto url del sitio"
+        android:inputType="textUri|textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Calificacion"
+        android:inputType="number|textPersonName" />
+
+    <Button
+        android:id="@+id/buttonSaveSite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="siteSave"
+        android:text="Crear Sitio" />
+
+</LinearLayout>

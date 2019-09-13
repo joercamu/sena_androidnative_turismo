@@ -1,7 +1,10 @@
 package appjc.joercamu.aplicacionturismonativo;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -70,5 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 textOut.setText(t.getMessage());
             }
         });
+    }
+    public void goToSiteNewActivity(View view) {
+        Intent intent = new Intent(this, SiteNewActivity.class);
+        startActivity(intent);
     }
 }
