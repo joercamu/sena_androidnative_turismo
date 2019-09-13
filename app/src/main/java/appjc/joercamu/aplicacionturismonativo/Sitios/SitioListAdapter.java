@@ -50,10 +50,12 @@ public class SitioListAdapter extends ArrayAdapter<Sitio> {
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView titleSitio = convertView.findViewById(R.id.titleSitio);
+        TextView infoSitio = convertView.findViewById(R.id.infoSitio);
         ImageView imageSitio = convertView.findViewById(R.id.imageSitio);
 
-        Picasso.get().load(sitePhoto).into(imageSitio);
-        titleSitio.setText(siteName);
+        Picasso.get().load(sitio.getPhoto()).into(imageSitio);
+        titleSitio.setText(sitio.getName());
+        infoSitio.setText(sitio.getInfo());
 
         return convertView;
     }
