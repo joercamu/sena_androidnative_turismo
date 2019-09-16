@@ -2,11 +2,17 @@ package appjc.joercamu.aplicacionturismonativo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import appjc.joercamu.aplicacionturismonativo.Sitios.Sitio;
 import appjc.joercamu.aplicacionturismonativo.Sitios.SitiosService;
@@ -19,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SiteNewActivity extends AppCompatActivity {
     EditText siteName, siteInfo, sitePhoto, siteRate;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +34,18 @@ public class SiteNewActivity extends AppCompatActivity {
         siteInfo = findViewById(R.id.editTextInfo);
         sitePhoto = findViewById(R.id.editTextPhoto);
         siteRate = findViewById(R.id.editTextRate);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_site);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Nuevo Sitio");
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(view.getContext(),SiteListActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
