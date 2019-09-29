@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TurismoActivity"></activity>
-        <activity android:name=".OperatorListActivity" />
+        <activity android:name=".TurismoListActivity" />
         <activity android:name=".SiteShowActivity" />
         <activity android:name=".HotelListActivity" />
         <activity android:name=".SiteListActivity" />

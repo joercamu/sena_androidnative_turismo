@@ -16,6 +16,9 @@ public interface TurismoService {
     @GET("operadores")
     Call<EsenaTurismo> getOperatour();
 
+    @GET("sitiosturismo")
+    Call<EsenaTurismo> getSitios();
+
     @POST("turismo")
     //@FormUrlEncoded
     Call<Turismo> postTurismo(@Body Turismo turismo);

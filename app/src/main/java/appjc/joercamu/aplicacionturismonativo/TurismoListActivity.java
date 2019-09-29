@@ -22,13 +22,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class OperatorListActivity extends AppCompatActivity {
+public class TurismoListActivity extends AppCompatActivity {
 
     Button addOperatorBtn;
     Button getOperatorListBtn;
     ListView listView;
 
     List<Turismo> listOperators = new ArrayList<Turismo>();
+
+    String turismoEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,22 @@ public class OperatorListActivity extends AppCompatActivity {
         getOperatorListBtn = findViewById(R.id.btnGetOperatorList);
         listView = findViewById(R.id.listViewOperators);
 
+        Bundle extras = getIntent().getExtras();
+        turismoEntity = extras.getString("turismo_entity");
+
+        if (turismoEntity.equals("hotel")) {
+            addOperatorBtn.setText("Agregar Hotel");
+        }else if(turismoEntity.equals("operator")){
+            addOperatorBtn.setText("Agregar Operador");
+        }else if(turismoEntity.equals("site")){
+            addOperatorBtn.setText("Agregar Sitio");
+        }
+
         addOperatorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OperatorListActivity.this, TurismoActivity.class);
-                intent.putExtra("turismo_name", "");
+                Intent intent = new Intent(TurismoListActivity.this, TurismoActivity.class);
+                intent.putExtra("turismo_type_entity", turismoEntity);
                 startActivity(intent);
             }
         });
@@ -51,19 +64,29 @@ public class OperatorListActivity extends AppCompatActivity {
         getOperatorListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getOperatorLis();
+                getOperatorLis(turismoEntity);
             }
         });
     }
 
-    private void getOperatorLis() {
+    private void getOperatorLis(String turismoEntityTxt) {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://especializacionsena.appspot.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         TurismoService turismoService = retrofit.create(TurismoService.class);
 
-        Call<EsenaTurismo> call = turismoService.getOperatour();
+        Call<EsenaTurismo> call;
+        if (turismoEntityTxt.equals("hotel")) {
+            call = turismoService.getHotels();
+        } else if(turismoEntityTxt.equals("operator")){
+            call = turismoService.getOperatour();
+        } else if(turismoEntityTxt.equals("site")){
+            call = turismoService.getSitios();
+        }else {
+            call = turismoService.getOperatour();
+        }
 
         call.enqueue(new Callback<EsenaTurismo>() {
             @Override
@@ -72,7 +95,7 @@ public class OperatorListActivity extends AppCompatActivity {
                     return;
                 }
                 listOperators = response.body().getInfo();
-                TurismoListAdapter turismoListAdapter = new TurismoListAdapter(OperatorListActivity.this, R.layout.list_turismo_item, listOperators);
+                TurismoListAdapter turismoListAdapter = new TurismoListAdapter(TurismoListActivity.this, R.layout.list_turismo_item, listOperators);
                 listView.setAdapter(turismoListAdapter);
             }
 

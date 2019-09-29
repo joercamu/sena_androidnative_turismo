@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class TurismoListAdapter extends ArrayAdapter<Turismo> {
     }
 
     @Override
-    public View getView(final int pos, View convertView, ViewGroup parent){
+    public View getView(final int pos, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.list_turismo_item, parent, false);
 
@@ -36,9 +37,19 @@ public class TurismoListAdapter extends ArrayAdapter<Turismo> {
         TextView txtTurismoAddress = (TextView) rowView.findViewById(R.id.addressTurismoTextView);
         TextView txtTurismoSite = (TextView) rowView.findViewById(R.id.siteTurismoTextView);
 
-        txtTurismoName.setText(listTurismo.get(pos).getName());
+        ImageView picTurismo = rowView.findViewById(R.id.picTurismoImageView);
+
+        txtTurismoName.setText(listTurismo.get(pos).getName() + " | " + listTurismo.get(pos).getType_entity());
         txtTurismoAddress.setText(listTurismo.get(pos).getAddress());
         txtTurismoSite.setText(String.format("Sitio: %s", listTurismo.get(pos).getSite()));
+
+        if (listTurismo.get(pos).getType_entity().equals("hotel")) {
+            picTurismo.setImageResource(R.drawable.ic_hotel_black_24dp);
+        } else if (listTurismo.get(pos).getType_entity().equals("operador")) {
+            picTurismo.setImageResource(R.drawable.ic_store_mall_directory_black_24dp);
+        } else if (listTurismo.get(pos).getType_entity().equals("sitio")) {
+            picTurismo.setImageResource(R.drawable.ic_pin_drop_black_24dp);
+        }
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +59,13 @@ public class TurismoListAdapter extends ArrayAdapter<Turismo> {
                 intent.putExtra("turismo_id", String.valueOf(listTurismo.get(pos).getId()));
                 intent.putExtra("turismo_name", listTurismo.get(pos).getName());
                 intent.putExtra("turismo_address", listTurismo.get(pos).getAddress());
+
+                intent.putExtra("turismo_site", listTurismo.get(pos).getSite());
+                intent.putExtra("turismo_phone", listTurismo.get(pos).getPhone());
+                intent.putExtra("turismo_mobile", listTurismo.get(pos).getMobile());
+                intent.putExtra("turismo_email", listTurismo.get(pos).getEmail());
+                intent.putExtra("turismo_entity", listTurismo.get(pos).getType_entity());
+
                 context.startActivity(intent);
             }
         });

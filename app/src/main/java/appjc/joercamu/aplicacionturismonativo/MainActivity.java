@@ -20,15 +20,18 @@ public class MainActivity extends AppCompatActivity {
         setImages();
          }
     public void goToSiteNewActivity(View view) {
-        Intent intent = new Intent(this, SiteListActivity.class);
+        Intent intent = new Intent(MainActivity.this, TurismoListActivity.class);
+        intent.putExtra("turismo_entity","site");
         startActivity(intent);
     }
     public void goToSHotelsListActivity(View view) {
-        Intent intent = new Intent(this, HotelListActivity.class);
+        Intent intent = new Intent(MainActivity.this, TurismoListActivity.class);
+        intent.putExtra("turismo_entity","hotel");
         startActivity(intent);
     }
     public void goToOperatorListActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, OperatorListActivity.class);
+        Intent intent = new Intent(MainActivity.this, TurismoListActivity.class);
+        intent.putExtra("turismo_entity","operator");
         startActivity(intent);
     }
     private void setImages(){

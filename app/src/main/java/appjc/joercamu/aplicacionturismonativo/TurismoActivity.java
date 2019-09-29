@@ -24,6 +24,11 @@ public class TurismoActivity extends AppCompatActivity {
     EditText editId;
     EditText editName;
     EditText editAdrres;
+    EditText editEmail;
+    EditText editSite;
+    EditText editPhone;
+    EditText editMobile;
+    EditText editEntity;
 
     Button btnSave;
     Button btnRemove;
@@ -41,6 +46,11 @@ public class TurismoActivity extends AppCompatActivity {
         editId = findViewById(R.id.idTurismoEditText);
         editName = findViewById(R.id.nameTurismoEditText);
         editAdrres = findViewById(R.id.addressTurismoEditText);
+        editEmail = findViewById(R.id.emailTurismoEditText);
+        editSite = findViewById(R.id.siteTurismoEditText);
+        editPhone = findViewById(R.id.phoneTurismoEditText);
+        editMobile = findViewById(R.id.mobileTurismoEditText);
+        editEntity = findViewById(R.id.entityTurismoEditText);
 
         btnSave = findViewById(R.id.saveButton);
         btnRemove = findViewById(R.id.deleteButton);
@@ -51,10 +61,34 @@ public class TurismoActivity extends AppCompatActivity {
         final String turismoId = extras.getString("turismo_id");
         String turismoName = extras.getString("turismo_name");
         String turismoAddress = extras.getString("turismo_address");
+        String turismoEmail = extras.getString("turismo_email");
+        String turismoSite = extras.getString("turismo_site");
+        String turismoPhone = extras.getString("turismo_phone");
+        String turismoMobile = extras.getString("turismo_mobile");
+        String turismoEntity = extras.getString("turismo_entity");
+
+        String turismoTypeEntity = extras.getString("turismo_type_entity");
 
         editId.setText(turismoId);
         editName.setText(turismoName);
         editAdrres.setText(turismoAddress);
+        editEmail.setText(turismoEmail);
+        editSite.setText(turismoSite);
+        editMobile.setText(turismoMobile);
+        editPhone.setText(turismoPhone);
+        editEntity.setText(turismoEntity);
+
+        editEntity.setFocusable(false);
+
+        if (turismoTypeEntity != null) {
+            if (turismoTypeEntity.equals("hotel")) {
+                editEntity.setText("hotel");
+            } else if (turismoTypeEntity.equals("operator")) {
+                editEntity.setText("operador");
+            } else if (turismoTypeEntity.equals("site")) {
+                editEntity.setText("sitio");
+            }
+        }
 
         if (turismoId != null && turismoId.trim().length() > 0) {
             editId.setFocusable(false);
@@ -70,11 +104,11 @@ public class TurismoActivity extends AppCompatActivity {
                 Turismo turismo = new Turismo();
                 turismo.setName(editName.getText().toString());
                 turismo.setAddress(editAdrres.getText().toString());
-                turismo.setEmail("email@info.com");
-                turismo.setSite("http://mysite.com.co");
-                turismo.setPhone("310 640 2911");
-                turismo.setMobile("032 124 2122");
-                turismo.setType_entity("operador");
+                turismo.setEmail(editEmail.getText().toString());
+                turismo.setSite(editSite.getText().toString());
+                turismo.setPhone(editPhone.getText().toString());
+                turismo.setMobile(editMobile.getText().toString());
+                turismo.setType_entity(editEntity.getText().toString());
 
                 if (turismoId != null && turismoId.trim().length() > 0) {
                     //update user
@@ -91,7 +125,7 @@ public class TurismoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 deleteTurismo(Integer.parseInt(turismoId));
 
-                Intent intent = new Intent(TurismoActivity.this, OperatorListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
                 startActivity(intent);
             }
         });
@@ -114,7 +148,7 @@ public class TurismoActivity extends AppCompatActivity {
                     return;
                 }
                 showAlert("Registro insertado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, OperatorListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
                 startActivity(intent);
             }
 
@@ -141,7 +175,7 @@ public class TurismoActivity extends AppCompatActivity {
                     return;
                 }
                 showAlert("Registro Actualizado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, OperatorListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
                 startActivity(intent);
             }
 
@@ -168,7 +202,7 @@ public class TurismoActivity extends AppCompatActivity {
                     return;
                 }
                 showAlert("Registro Actualizado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, OperatorListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
                 startActivity(intent);
             }
 
@@ -178,6 +212,7 @@ public class TurismoActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -191,7 +226,7 @@ public class TurismoActivity extends AppCompatActivity {
 
     public void showAlert(String text) {
         new AlertDialog.Builder(this)
-                .setTitle("Error al crear sitio")
+                .setTitle("Informacion Turismo")
                 .setMessage(text)
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
