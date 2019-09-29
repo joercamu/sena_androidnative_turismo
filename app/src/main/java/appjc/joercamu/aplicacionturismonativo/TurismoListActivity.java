@@ -35,7 +35,7 @@ public class TurismoListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_operator_list);
+        setContentView(R.layout.activity_turismo_list);
 
         addOperatorBtn = findViewById(R.id.btnAddOperator);
         getOperatorListBtn = findViewById(R.id.btnGetOperatorList);
