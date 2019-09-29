@@ -27,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HotelListActivity.class);
         startActivity(intent);
     }
+    public void goToOperatorListActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, OperatorListActivity.class);
+        startActivity(intent);
+    }
     private void setImages(){
         imageViewSitios = findViewById(R.id.image_sitios);
         imageViewOperatour = findViewById(R.id.image_operatour);

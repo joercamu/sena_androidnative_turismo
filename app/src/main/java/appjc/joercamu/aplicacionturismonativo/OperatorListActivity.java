@@ -3,9 +3,13 @@ package appjc.joercamu.aplicacionturismonativo;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import appjc.joercamu.aplicacionturismonativo.Turismo.EsenaTurismo;
@@ -18,35 +22,58 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HotelListActivity extends AppCompatActivity {
+public class OperatorListActivity extends AppCompatActivity {
 
-    ListView mlistView;
+    Button addOperatorBtn;
+    Button getOperatorListBtn;
+    ListView listView;
+
+    List<Turismo> listOperators = new ArrayList<Turismo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hotel_list);
-        mlistView = findViewById(R.id.list_view_hotels);
-        getHotels();
+        setContentView(R.layout.activity_operator_list);
+
+        addOperatorBtn = findViewById(R.id.btnAddOperator);
+        getOperatorListBtn = findViewById(R.id.btnGetOperatorList);
+        listView = findViewById(R.id.listViewOperators);
+
+        addOperatorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OperatorListActivity.this, TurismoActivity.class);
+                intent.putExtra("turismo_name", "");
+                startActivity(intent);
+            }
+        });
+
+        getOperatorListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getOperatorLis();
+            }
+        });
     }
-    private void getHotels(){
+
+    private void getOperatorLis() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://especializacionsena.appspot.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         TurismoService turismoService = retrofit.create(TurismoService.class);
 
-        Call<EsenaTurismo> call = turismoService.getHotels();
+        Call<EsenaTurismo> call = turismoService.getOperatour();
 
         call.enqueue(new Callback<EsenaTurismo>() {
             @Override
             public void onResponse(Call<EsenaTurismo> call, Response<EsenaTurismo> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     return;
                 }
-                List<Turismo> hotelsList = response.body().getInfo();
-                TurismoListAdapter hotelsListAdapter = new TurismoListAdapter(HotelListActivity.this, R.layout.list_turismo_item, hotelsList);
-                mlistView.setAdapter(hotelsListAdapter);
+                listOperators = response.body().getInfo();
+                TurismoListAdapter turismoListAdapter = new TurismoListAdapter(OperatorListActivity.this, R.layout.list_turismo_item, listOperators);
+                listView.setAdapter(turismoListAdapter);
             }
 
             @Override
@@ -55,7 +82,8 @@ public class HotelListActivity extends AppCompatActivity {
             }
         });
     }
-    public void showAlert(String text){
+
+    public void showAlert(String text) {
         new AlertDialog.Builder(this)
                 .setTitle("Error al crear sitio")
                 .setMessage(text)

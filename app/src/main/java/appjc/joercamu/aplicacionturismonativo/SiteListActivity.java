@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -29,6 +30,14 @@ public class SiteListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_site_list);
 
         mlistView = findViewById(R.id.list_view_sitios);
+        /*mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent siteShow = new Intent(SiteListActivity.this, SiteShowActivity.class);
+                //siteShow.putExtra("param",content)
+                startActivity(siteShow);
+            }
+        });*/
         getSitios();
     }
     private void getSitios() {

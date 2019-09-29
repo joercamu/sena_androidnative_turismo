@@ -1,9 +1,13 @@
 package appjc.joercamu.aplicacionturismonativo.Turismo;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface TurismoService {
     @GET("hoteles")
@@ -13,13 +17,11 @@ public interface TurismoService {
     Call<EsenaTurismo> getOperatour();
 
     @POST("turismo")
-    @FormUrlEncoded
-    Call<Turismo> postTurismo(@Field("name") String name,
-                              @Field("address") String address,
-                              @Field("site") String site,
-                              @Field("email") String email,
-                              @Field("phone") int phone,
-                              @Field("mobile") String mobile,
-                              @Field("type_entity") String type_entity
-    );
+    //@FormUrlEncoded
+    Call<Turismo> postTurismo(@Body Turismo turismo);
+    @PUT("turismo/{id}")
+    Call<Turismo> updateTurismo(@Path("id") int id, @Body Turismo turismo);
+
+    @DELETE("turismo/{id}")
+    Call<Turismo> deleteTurismo(@Path("id") int id);
 }
