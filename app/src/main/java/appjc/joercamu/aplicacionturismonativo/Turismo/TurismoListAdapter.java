@@ -21,6 +21,7 @@ import appjc.joercamu.aplicacionturismonativo.TurismoActivity;
 public class TurismoListAdapter extends ArrayAdapter<Turismo> {
     private Context context;
     private List<Turismo> listTurismo;
+    private  String turismo_type_entity;
 
     public TurismoListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Turismo> objects) {
         super(context, resource, objects);
@@ -45,10 +46,13 @@ public class TurismoListAdapter extends ArrayAdapter<Turismo> {
 
         if (listTurismo.get(pos).getType_entity().equals("hotel")) {
             picTurismo.setImageResource(R.drawable.ic_hotel_black_24dp);
+            turismo_type_entity = "hotel";
         } else if (listTurismo.get(pos).getType_entity().equals("operador")) {
             picTurismo.setImageResource(R.drawable.ic_store_mall_directory_black_24dp);
+            turismo_type_entity = "operator";
         } else if (listTurismo.get(pos).getType_entity().equals("sitio")) {
             picTurismo.setImageResource(R.drawable.ic_pin_drop_black_24dp);
+            turismo_type_entity = "site";
         }
 
         rowView.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +69,9 @@ public class TurismoListAdapter extends ArrayAdapter<Turismo> {
                 intent.putExtra("turismo_mobile", listTurismo.get(pos).getMobile());
                 intent.putExtra("turismo_email", listTurismo.get(pos).getEmail());
                 intent.putExtra("turismo_entity", listTurismo.get(pos).getType_entity());
+
+                intent.putExtra("turismo_type_entity", turismo_type_entity);
+
 
                 context.startActivity(intent);
             }

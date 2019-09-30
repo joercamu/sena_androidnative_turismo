@@ -11,13 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import appjc.joercamu.aplicacionturismonativo.Turismo.APIUtils;
 import appjc.joercamu.aplicacionturismonativo.Turismo.Turismo;
 import appjc.joercamu.aplicacionturismonativo.Turismo.TurismoService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TurismoActivity extends AppCompatActivity {
 
@@ -34,6 +33,8 @@ public class TurismoActivity extends AppCompatActivity {
     Button btnRemove;
 
     TextView txtId;
+
+    TurismoService turismoService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,8 @@ public class TurismoActivity extends AppCompatActivity {
 
         txtId = findViewById(R.id.idTurismoText);
 
+        turismoService = APIUtils.getTurismoService();
+
         Bundle extras = getIntent().getExtras();
         final String turismoId = extras.getString("turismo_id");
         String turismoName = extras.getString("turismo_name");
@@ -67,7 +70,7 @@ public class TurismoActivity extends AppCompatActivity {
         String turismoMobile = extras.getString("turismo_mobile");
         String turismoEntity = extras.getString("turismo_entity");
 
-        String turismoTypeEntity = extras.getString("turismo_type_entity");
+        final String turismoTypeEntity = extras.getString("turismo_type_entity");
 
         editId.setText(turismoId);
         editName.setText(turismoName);
@@ -112,10 +115,10 @@ public class TurismoActivity extends AppCompatActivity {
 
                 if (turismoId != null && turismoId.trim().length() > 0) {
                     //update user
-                    updateTurismo(Integer.parseInt(turismoId), turismo);
+                   updateTurismo(Integer.parseInt(turismoId), turismo, turismoTypeEntity);
                 } else {
                     //add user
-                    addTurismo(turismo);
+                    addTurismo(turismo, turismoTypeEntity);
                 }
             }
         });
@@ -123,22 +126,13 @@ public class TurismoActivity extends AppCompatActivity {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteTurismo(Integer.parseInt(turismoId));
-
-                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
-                startActivity(intent);
+                deleteTurismo(Integer.parseInt(turismoId), turismoTypeEntity);
             }
         });
 
     }
 
-    public void addTurismo(Turismo turismo) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://especializacionsena.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        TurismoService turismoService = retrofit.create(TurismoService.class);
-
+    public void addTurismo(Turismo turismo, final String turismoTypeEntity) {
         Call<Turismo> call = turismoService.postTurismo(turismo);
         call.enqueue(new Callback<Turismo>() {
             @Override
@@ -147,8 +141,8 @@ public class TurismoActivity extends AppCompatActivity {
                     showAlert(response.message());
                     return;
                 }
-                showAlert("Registro insertado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this,TurismoListActivity.class);
+                intent.putExtra("turismo_type_entity", turismoTypeEntity);
                 startActivity(intent);
             }
 
@@ -159,13 +153,7 @@ public class TurismoActivity extends AppCompatActivity {
         });
     }
 
-    public void updateTurismo(int id, Turismo turismo) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://especializacionsena.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        TurismoService turismoService = retrofit.create(TurismoService.class);
-
+    public void updateTurismo(int id, Turismo turismo, final String turismoTypeEntity) {
         Call<Turismo> call = turismoService.updateTurismo(id, turismo);
         call.enqueue(new Callback<Turismo>() {
             @Override
@@ -174,8 +162,8 @@ public class TurismoActivity extends AppCompatActivity {
                     showAlert(response.message());
                     return;
                 }
-                showAlert("Registro Actualizado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this,TurismoListActivity.class);
+                intent.putExtra("turismo_type_entity", turismoTypeEntity);
                 startActivity(intent);
             }
 
@@ -186,13 +174,7 @@ public class TurismoActivity extends AppCompatActivity {
         });
     }
 
-    public void deleteTurismo(int id) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://especializacionsena.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        TurismoService turismoService = retrofit.create(TurismoService.class);
-
+    public void deleteTurismo(int id, final String turismoTypeEntity) {
         Call<Turismo> call = turismoService.deleteTurismo(id);
         call.enqueue(new Callback<Turismo>() {
             @Override
@@ -201,8 +183,8 @@ public class TurismoActivity extends AppCompatActivity {
                     showAlert(response.message());
                     return;
                 }
-                showAlert("Registro Actualizado correctamente");
-                Intent intent = new Intent(TurismoActivity.this, TurismoListActivity.class);
+                Intent intent = new Intent(TurismoActivity.this,TurismoListActivity.class);
+                intent.putExtra("turismo_type_entity", turismoTypeEntity);
                 startActivity(intent);
             }
 

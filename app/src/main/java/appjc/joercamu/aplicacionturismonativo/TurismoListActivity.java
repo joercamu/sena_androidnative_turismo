@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import appjc.joercamu.aplicacionturismonativo.Turismo.APIUtils;
 import appjc.joercamu.aplicacionturismonativo.Turismo.EsenaTurismo;
 import appjc.joercamu.aplicacionturismonativo.Turismo.Turismo;
 import appjc.joercamu.aplicacionturismonativo.Turismo.TurismoListAdapter;
@@ -20,8 +21,6 @@ import appjc.joercamu.aplicacionturismonativo.Turismo.TurismoService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TurismoListActivity extends AppCompatActivity {
 
@@ -33,6 +32,8 @@ public class TurismoListActivity extends AppCompatActivity {
 
     String turismoEntity;
 
+    TurismoService turismoService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,19 +44,26 @@ public class TurismoListActivity extends AppCompatActivity {
         getOperatorListBtn = findViewById(R.id.btnGetOperatorList);
         listView = findViewById(R.id.listViewOperators);
 
+        turismoService = APIUtils.getTurismoService();
+
         Bundle extras = getIntent().getExtras();
-        turismoEntity = extras.getString("turismo_entity");
+        try {
+            turismoEntity = extras.getString("turismo_type_entity");
+            if (turismoEntity.equals("hotel")) {
+                addOperatorBtn.setText("Agregar Hotel");
+            }else if(turismoEntity.equals("operator")){
+                addOperatorBtn.setText("Agregar Operador");
+            }else if(turismoEntity.equals("site")){
+                addOperatorBtn.setText("Agregar Sitio");
+            }
+        } catch (Exception e){
+            showAlert("No hay una entidad declarada");
+        }
 
         setTitle(turismoEntity+ " App");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (turismoEntity.equals("hotel")) {
-            addOperatorBtn.setText("Agregar Hotel");
-        }else if(turismoEntity.equals("operator")){
-            addOperatorBtn.setText("Agregar Operador");
-        }else if(turismoEntity.equals("site")){
-            addOperatorBtn.setText("Agregar Sitio");
-        }
+
 
         addOperatorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,21 +84,14 @@ public class TurismoListActivity extends AppCompatActivity {
 
     private void getOperatorLis(String turismoEntityTxt) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://especializacionsena.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        TurismoService turismoService = retrofit.create(TurismoService.class);
 
-        Call<EsenaTurismo> call;
+        Call<EsenaTurismo> call = null;
         if (turismoEntityTxt.equals("hotel")) {
             call = turismoService.getHotels();
         } else if(turismoEntityTxt.equals("operator")){
             call = turismoService.getOperatour();
         } else if(turismoEntityTxt.equals("site")){
             call = turismoService.getSitios();
-        }else {
-            call = turismoService.getOperatour();
         }
 
         call.enqueue(new Callback<EsenaTurismo>() {
@@ -113,7 +114,7 @@ public class TurismoListActivity extends AppCompatActivity {
 
     public void showAlert(String text) {
         new AlertDialog.Builder(this)
-                .setTitle("Error al crear sitio")
+                .setTitle("Info Turismo")
                 .setMessage(text)
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)

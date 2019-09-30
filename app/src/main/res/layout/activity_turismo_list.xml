@@ -5,24 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TurismoListActivity">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.button.MaterialButton
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Agregar"
-            android:id="@+id/btnAddOperator"/>
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Obtener Lista"
-            android:id="@+id/btnGetOperatorList"/>
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listViewOperators"></ListView>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddOperator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGetOperatorList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Obtener Lista" />
+
+            <ListView
+                android:id="@+id/listViewOperators"
+                android:layout_width="match_parent"
+                android:layout_height="638dp"></ListView>
+        </LinearLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
