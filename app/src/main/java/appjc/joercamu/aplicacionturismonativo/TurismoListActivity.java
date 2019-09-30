@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -37,12 +38,16 @@ public class TurismoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turismo_list);
 
+
         addOperatorBtn = findViewById(R.id.btnAddOperator);
         getOperatorListBtn = findViewById(R.id.btnGetOperatorList);
         listView = findViewById(R.id.listViewOperators);
 
         Bundle extras = getIntent().getExtras();
         turismoEntity = extras.getString("turismo_entity");
+
+        setTitle(turismoEntity+ " App");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (turismoEntity.equals("hotel")) {
             addOperatorBtn.setText("Agregar Hotel");
@@ -113,5 +118,15 @@ public class TurismoListActivity extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
