@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,8 @@ public class TurismoActivity extends AppCompatActivity {
 
     Button btnSave;
     Button btnRemove;
+    Button btnCall;
+    Button btnMail;
 
     TextView txtId;
 
@@ -55,6 +58,8 @@ public class TurismoActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.saveButton);
         btnRemove = findViewById(R.id.deleteButton);
+        btnCall = findViewById(R.id.callButton);
+        btnMail = findViewById(R.id.mailButton);
 
         txtId = findViewById(R.id.idTurismoText);
 
@@ -99,6 +104,8 @@ public class TurismoActivity extends AppCompatActivity {
             txtId.setVisibility(View.INVISIBLE);
             editId.setVisibility(View.INVISIBLE);
             btnRemove.setVisibility(View.INVISIBLE);
+            btnMail.setVisibility(View.INVISIBLE);
+            btnCall.setVisibility(View.INVISIBLE);
         }
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +134,24 @@ public class TurismoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 deleteTurismo(Integer.parseInt(turismoId), turismoTypeEntity);
+            }
+        });
+
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+editPhone.getText().toString()));
+                startActivity(intent);
+            }
+        });
+        btnMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO , Uri.fromParts(
+                        "mailto",editEmail.getText().toString(), null));
+                startActivity(intent);
+
             }
         });
 
